@@ -1,0 +1,40 @@
+# Vivado project artifacts
+vivado_proj/
+*.jou
+*.log
+*.str
+*.xpr
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+
+# Build outputs
+build/
+*.vvp
+*.vcd
+*.fst
+
+# AIE build artifacts
+aie/build/
+
+# Vitis
+*.xclbin
+*.xo
+*.ltx
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python (if any PS scripts added later)
+__pycache__/
+*.pyc
