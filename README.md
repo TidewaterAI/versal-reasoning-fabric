@@ -175,18 +175,41 @@ versal-reasoning-fabric/
 
 ## How to Help
 
-We're looking for collaborators in three areas:
+We're looking for collaborators and partners in four areas:
 
 **1. Hardware validation (most needed).** If you have a VCK190, please:
 - Run `make vivado-project` and attempt synthesis
 - Report utilization and timing results
 - Try the AIE kernels with `aiecompiler`
 
-**2. Instrument bridges.** Implement protocol adapters for specific lab
-instruments. The `instrument_bridge.sv` is the framing layer; the protocol
-conversion (SCPI/LXI/VISA -> AXI-Stream) is the missing piece.
+**2. Instrument integration partnerships.** The reasoning fabric's
+[instrumented lab architecture](docs/PARALLEL_REASONING_FABRIC.md#10-the-instrumented-lab-closing-the-full-loop)
+needs real instruments to validate. We're building open-source, FPGA-native
+instrument bridges (SCPI/LXI/VISA -> AXI-Stream) and looking for hardware
+partners willing to loan or donate equipment for integration development.
 
-**3. Agent orchestration software.** The hardware fabric needs a software
+Priority instruments:
+- **Oscilloscopes** — Tektronix, Keysight, Rigol (waveform capture -> feature extraction)
+- **Source measure units** — Keithley/Tektronix (I-V characterization loops)
+- **Spectrum analyzers** — Rigol, Siglent (RF/EMC characterization)
+- **Logic analyzers** — Saleae, Digilent (protocol-level debug correlation)
+- **VNAs** — NanoVNA, Keysight (impedance/S-parameter streaming)
+- **Thermal cameras** — FLIR/Teledyne (spatial thermal correlation)
+
+What we offer in return: open-source bridge drivers for your instruments
+(expanding your ecosystem reach), integration demos and video content, and
+co-authorship on application notes. If your company has an open-source,
+academic, or developer partnership program, we'd love to talk —
+reach out via [GitHub Issues](https://github.com/TidewaterAI/versal-reasoning-fabric/issues)
+or email info@tidewaterai.com.
+
+**3. Instrument bridge development.** If you already own lab equipment and
+want to contribute a bridge driver, the `instrument_bridge.sv` is the
+framing layer; the protocol conversion (SCPI/LXI/VISA -> AXI-Stream) is
+the missing piece. Each instrument type becomes an open-source project
+in its own right.
+
+**4. Agent orchestration software.** The hardware fabric needs a software
 orchestration layer (extending the proven [bicky-bee](https://github.com/TidewaterAI/bicky-bee)
 NATS/OPA stack) to manage lanes, route agent tasks, and enforce policies.
 
