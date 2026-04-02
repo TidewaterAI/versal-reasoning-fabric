@@ -1,6 +1,6 @@
 # From Sensor Streams to Reasoning Streams: A Parallel Hardware Fabric for AI Agent Orchestration
 
-**TWAI Research Document -- April 2026**
+**Tidewater AI Research Document -- April 2026**
 **Hampton Roads Research Corporation, LLC**
 
 ---
