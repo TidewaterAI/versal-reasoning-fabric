@@ -20,7 +20,7 @@ The core insight: an AI agent reasoning pipeline and a sensor DSP pipeline
 have the same structure -- streaming data through parallel processing cores
 with safety constraints. This project implements that generalization in RTL.
 
-**Companion project:** [bicky-bee](https://github.com/tidewater-ai/bicky-bee — coming soon) --
+**Companion project:** [bicky-bee](https://github.com/TidewaterAI/bicky-bee) (open-source release pending) --
 the working beehive monitoring pipeline that proves the architecture. Same
 RC/Bicky inference engines, same safety modules, same stream router. bicky-bee
 runs on a $200 Zybo Z7-20; this project scales it to a $10K Versal with 400
@@ -70,7 +70,7 @@ AI Engine tiles.
 Requires [Icarus Verilog](https://steveicarus.github.io/iverilog/) (open-source):
 
 ```bash
-git clone https://github.com/tidewater-ai/versal-reasoning-fabric
+git clone https://github.com/TidewaterAI/versal-reasoning-fabric
 cd versal-reasoning-fabric
 make sim-lane
 ```
@@ -115,7 +115,7 @@ make vivado-project    # Creates Vivado project targeting XCVC1902
 | `crypto_signer.sv` | Proven | Frame signing (mock, upgrade to ATECC608) | Production |
 
 "Proven" = synthesized, timing-met, and validated on Zynq-7000 hardware in
-the [bicky-bee](https://github.com/tidewater-ai/bicky-bee — coming soon) deployment.
+the [bicky-bee](https://github.com/TidewaterAI/bicky-bee) deployment.
 
 ### AIE Kernels (AI Engine -- Experimental)
 
@@ -187,7 +187,7 @@ instruments. The `instrument_bridge.sv` is the framing layer; the protocol
 conversion (SCPI/LXI/VISA -> AXI-Stream) is the missing piece.
 
 **3. Agent orchestration software.** The hardware fabric needs a software
-orchestration layer (extending the proven [bicky-bee](https://github.com/tidewater-ai/bicky-bee — coming soon)
+orchestration layer (extending the proven [bicky-bee](https://github.com/TidewaterAI/bicky-bee)
 NATS/OPA stack) to manage lanes, route agent tasks, and enforce policies.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
@@ -201,9 +201,9 @@ orchestration and instrumented lab automation.
 
 The key architectural primitives (stream router, safety supervisor, CBF
 solver, plugin interface) were developed for the
-[TWAI](https://github.com/tidewater-ai/twai) cyber-physical platform and
+[TWAI](https://github.com/TidewaterAI/twai) cyber-physical platform and
 proven on Zynq-7000 hardware running the
-[bicky-bee](https://github.com/tidewater-ai/bicky-bee — coming soon) beehive monitoring
+[bicky-bee](https://github.com/TidewaterAI/bicky-bee) beehive monitoring
 pipeline. This project takes those proven modules and scales them to Versal.
 
 ## License
