@@ -1285,30 +1285,22 @@ correlations. The TWAI architecture treats them identically.
 | **Flash-MoE** | Mixture-of-Experts LLM (Qwen3.5-397B) with NVMe expert paging |
 | **ANE** | Apple Neural Engine -- used for Tier 1/2 fast inference in Lex kernel |
 
-## Appendix B: File Cross-References
+## Appendix B: Component Map
 
-| Concept | Source File |
-|---------|------------|
-| Hub top-level integration | `platform/fpga/hub-zybo/fpga/src/hub_top.v` |
-| Reservoir computing core | `platform/fpga/hub-zybo/fpga/src/blocks/rc/rc_core.sv` |
-| Bicky feedforward inference | `platform/fpga/hub-zybo/fpga/src/blocks/neural/bicky_inference.sv` |
-| N:1 stream router | `platform/fpga/hub-zybo/fpga/src/common/ip/stream_router.sv` |
-| Safety supervisor (Ring 0) | `platform/fpga/hub-zybo/fpga/src/blocks/safety_supervisor.v` |
-| Safety kernel + CBF solver | `platform/fpga/hub-zybo/fpga/src/blocks/safety_kernel.sv` |
-| CBF constrained optimization | `platform/fpga/hub-zybo/fpga/src/blocks/cbf_solver.sv` |
-| ADC streaming ingest | `platform/fpga/hub-zybo/fpga/src/blocks/ad7124_reader.sv` |
-| Window gating | `platform/fpga/hub-zybo/fpga/src/blocks/array_ingest.sv` |
-| Stream data fabric | `platform/fpga/hub-zybo/fpga/src/blocks/hub_stream_fabric.sv` |
-| RC/Bicky mode switching | `platform/fpga/hub-zybo/fpga/src/blocks/hub_rc_mode_fabric.sv` |
-| Deployment constants | `platform/fpga/hub-zybo/fpga/src/hub_config.svh` |
-| DSP feature extraction | `rtl/dsp_feature_edge/dsp_feature_edge.v` |
-| Cryptographic signing | `platform/fpga/hub-zybo/fpga/src/blocks/crypto_signer.sv` |
-| Flash-MoE library | `lex/orchestrator/flash_moe_lib.h`, `flash_moe_lib.m` |
-| Lex orchestrator | `lex/orchestrator/TWAIOrchestrator.m` |
-| ANE inference | `lex/orchestrator/TWAIANEInference.m` |
-| OPA policy evaluator | `lex/orchestrator/TWAIOPAEvaluator.m` |
-| Audit ledger | `lex/orchestrator/TWAIAuditLedger.m` |
-| FPGA bridge | `lex/orchestrator/TWAIFPGABridge.m` |
-| Hyperagent optimizer | `lex/hyperagent/twai_evolve.py` |
-| System architecture | `ARCHITECTURE.md` |
-| Platform vision | `docs/WHAT_THIS_IS.md` |
+| Concept | Implementation |
+|---------|---------------|
+| Hub top-level integration | SystemVerilog top module with AXI-Stream interconnect |
+| Reservoir computing core | Parameterized RC with Q1.15 arithmetic, tanh LUT, leaky update |
+| Bicky feedforward inference | Constructive NN: input → hidden (tanh) → output (linear), DSP48 multiply |
+| N:1 stream router | Priority-arbitrated AXI-Stream mux, frame-atomic forwarding |
+| Safety supervisor | Hardware watchdog, kill latch, duty counter (Ring 0) |
+| Safety kernel + CBF solver | Control Barrier Function projection for velocity/acceleration/geofence |
+| ADC streaming ingest | SPI capture with timestamped framing and window gating |
+| Stream data fabric | Multi-slot priority routing with type-tagged streams |
+| Cryptographic signing | SHA-256 / Ed25519 frame authentication |
+| 3-tier inference stack | ANE (<1ms) → RC readout (<1ms) → MoE LLM (50-200ms) |
+| Policy engine | OPA/Rego with ABORT/HOLD/ADVANCE cascade |
+| Audit ledger | HMAC-SHA256 chained, tamper-evident reasoning trace |
+| Hyperagent optimizer | Population-based architecture search (evolutionary) |
+
+Source code for the working prototype is available upon request for qualified research and investment partners.
